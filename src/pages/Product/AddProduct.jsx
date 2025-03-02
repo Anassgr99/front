@@ -33,8 +33,8 @@ const AddProduct = () => {
     const fetchData = async () => {
       try {
         const [storesRes, categoriesRes] = await Promise.all([
-          axios.get("http://localhost:3000/api/stores"),
-          axios.get("http://localhost:3000/api/categorys"),
+          axios.get("http://192.168.1.7:3000/api/stores"),
+          axios.get("http://192.168.1.7:3000/api/categorys"),
         ]);
         setStores(storesRes.data);
         setCategories(categoriesRes.data);
@@ -55,7 +55,7 @@ const AddProduct = () => {
     
     try {
       // Create a new product
-      const productRes = await axios.post("http://localhost:3000/api/products", productData);
+      const productRes = await axios.post("http://192.168.1.7:3000/api/products", productData);
       console.log("Product added successfully:", productData);
   
       // Create a store-product association
@@ -67,7 +67,7 @@ const AddProduct = () => {
       
       console.log(storeProductData);
       
-      await axios.post("http://localhost:3000/api/store-products/add", storeProductData);
+      await axios.post("http://192.168.1.7:3000/api/store-products/add", storeProductData);
       console.log("Store product added successfully:", storeProductData);
       navigate("/products");
 

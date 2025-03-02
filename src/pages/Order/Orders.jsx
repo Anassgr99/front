@@ -13,7 +13,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/Orders");
+        const response = await axios.get("http://192.168.1.7:3000/api/Orders");
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -24,7 +24,7 @@ const Orders = () => {
 
   const deleteProduct = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/Orders/${id}`);
+      await axios.delete(`http://192.168.1.7:3000/api/Orders/${id}`);
       setProducts(products.filter((product) => product.id !== id));
       alert("Product deleted successfully!");
     } catch (error) {

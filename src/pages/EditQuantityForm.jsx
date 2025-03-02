@@ -18,7 +18,7 @@ const EditQuantityForm = ({ storeId, productId, onClose, store }) => {
       }
 
       const response = await axios.post(
-        "http://localhost:3000/api/store-products/add",
+        "http://192.168.1.7:3000/api/store-products/add",
         {
           store_id: storeId,
           product_id: productId,

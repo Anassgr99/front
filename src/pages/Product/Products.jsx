@@ -17,7 +17,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/products");
+        const response = await axios.get("http://192.168.1.7:3000/api/products");
 
         setProducts(response.data); // Set fetched products
         console.log(response.data);
@@ -31,7 +31,7 @@ const Products = () => {
   // Delete product by ID
   const deleteProduct = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/products/${id}`);
+      await axios.delete(`http://192.168.1.7:3000/api/products/${id}`);
       setProducts(products.filter((product) => product.id !== id)); // Update state
       alert("Product deleted successfully!");
     } catch (error) {

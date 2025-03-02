@@ -10,7 +10,7 @@ const VenteJour = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/orders"); // Update with your API URL
+        const response = await axios.get("http://192.168.1.7:3000/api/orders"); // Update with your API URL
         const orders = response.data;
   
         console.log("Données reçues : ", orders); // Debugging

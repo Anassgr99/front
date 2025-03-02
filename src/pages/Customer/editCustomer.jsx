@@ -16,7 +16,7 @@ const EditCustomer = () => {
     // Fetch the customer data when the component mounts
     const fetchCustomer = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/customers/${id}`);
+        const response = await axios.get(`http://192.168.1.7:3000/api/customers/${id}`);
         setCustomerData(response.data); // Set the fetched customer data into state
       } catch (error) {
         console.error("Error fetching customer data", error);
@@ -39,7 +39,7 @@ const EditCustomer = () => {
     e.preventDefault();
 
     try {
-      await axios.put(`http://localhost:3000/api/customers/${id}`, {
+      await axios.put(`http://192.168.1.7:3000/api/customers/${id}`, {
         name: customerData.name,
         email: customerData.email,
         phone: customerData.phone,

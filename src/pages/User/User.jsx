@@ -15,7 +15,7 @@ export const User = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {   
-        const response = await axios.get("http://localhost:3000/api/users");
+        const response = await axios.get("http://192.168.1.7:3000/api/users");
         setUsers(response.data); // Set fetched users
         console.log(response.data);
       } catch (error) {
@@ -28,7 +28,7 @@ export const User = () => {
   // Delete user by ID
   const deleteUser = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/users/${id}`);
+      await axios.delete(`http://192.168.1.7:3000/api/users/${id}`);
       setUsers(users.filter((user) => user.id !== id)); // Update state
       alert("User deleted successfully!");
     } catch (error) {

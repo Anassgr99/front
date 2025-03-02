@@ -37,7 +37,7 @@ const ExcelOptions = () => {
     formData.append("file", file);
     try {
       setUploadStatus("Uploading...");
-      const response = await axios.post("http://localhost:3000/api/uploadExcel", formData, {
+      const response = await axios.post("http://192.168.1.7:3000/api/uploadExcel", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setUploadStatus("Upload successful!");

@@ -16,8 +16,8 @@ const StoreProductTable = () => {
     setLoading(true); // Start loading
     try {
       const [response, storeResponse] = await Promise.all([
-        axios.get("http://localhost:3000/api/store-products"),
-        axios.get("http://localhost:3000/api/stores"),
+        axios.get("http://192.168.1.7:3000/api/store-products"),
+        axios.get("http://192.168.1.7:3000/api/stores"),
       ]);
       console.log(response.data);
       

@@ -236,7 +236,7 @@ const Cart = ({ cart, dispatch, handlePayment, product, theme }) => {
 
 // this useEffect to fetch customers on component mount
 useEffect(() => {
-  axios.get("http://localhost:3000/api/customers")
+  axios.get("http://192.168.1.7:3000/api/customers")
     .then(response => {
       setCustomers(response.data);
       // Set default customer to first in list (id 1)
@@ -250,7 +250,7 @@ useEffect(() => {
   useEffect(() => {
     if (showModal) {
       axios
-        .get("http://localhost:3000/api/customers")
+        .get("http://192.168.1.7:3000/api/customers")
         .then((response) => setCustomers(response.data))
         .catch((error) =>
           console.error("Error fetching customers:", error)
@@ -328,7 +328,7 @@ useEffect(() => {
             note: returnNote || "Bulk return from cart",
           };
           const response = await axios.post(
-            "http://localhost:3000/api/returns", // Updated endpoint
+            "http://192.168.1.7:3000/api/returns", // Updated endpoint
             returnData
           );
           if (response.status !== 201) {
@@ -742,7 +742,7 @@ const handleLogout = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/categorys/");
+        const response = await fetch("http://192.168.1.7:3000/api/categorys/");
 
         if (!response.ok)
           throw new Error("Error fetching categories");
@@ -761,7 +761,7 @@ const handleLogout = () => {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://localhost:3000/api/getStockQuantitiesByid/${id}`
+          `http://192.168.1.7:3000/api/getStockQuantitiesByid/${id}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -846,7 +846,7 @@ const handleLogout = () => {
           order_store: storeId, // Using the store id from local storage
         })),
       };
-      const response = await axios.post("http://localhost:3000/api/orders", orderData);
+      const response = await axios.post("http://192.168.1.7:3000/api/orders", orderData);
       if (response.data && response.data.orderId) {
         toast.success(
           `Order placed successfully! Order ID: ${response.data.orderId}`

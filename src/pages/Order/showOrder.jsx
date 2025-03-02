@@ -11,7 +11,7 @@ const ShowOrder = () => {
     const fetchOrder = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/orders/${id}`
+          `http://192.168.1.7:3000/api/orders/${id}`
         );
         const orderData = response.data;
         console.log(orderData);

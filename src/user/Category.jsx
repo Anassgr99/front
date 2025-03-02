@@ -15,7 +15,7 @@ const Category = () => {
 
   useEffect(() => {
     // Fetch categories from backend
-    fetch('http://localhost:3000/api/category')
+    fetch('http://192.168.1.7:3000/api/category')
       .then((response) => response.json())
       .then((data) => setCategories(data))
       .catch((error) => console.error('Error fetching categories:', error));
@@ -34,7 +34,7 @@ const Category = () => {
   }, [searchQuery, categoryDetails]);
 
   const getCategoryDetails = (categoryId) => {
-    fetch(`http://localhost:3000/api/productsC/${categoryId}`)
+    fetch(`http://192.168.1.7:3000/api/productsC/${categoryId}`)
       .then((response) => response.json())
       .then((data) => {
         setCategoryDetails(data);

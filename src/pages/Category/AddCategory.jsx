@@ -33,7 +33,7 @@ const AddCategory = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/categorys",
+        "http://192.168.1.7:3000/api/categorys",
         categoryData
       );
       console.log("Category added successfully:", response.data);
