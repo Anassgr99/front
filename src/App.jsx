@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Layout from "./components/Layout";
 import Login from "./components/Login";
-import IsUser from "./pages/IsUser";
+import IsUser from "./pages/IsUser.jsx";
 import HomeStore from "./user/HomeStore";
 import { ThemeProvider } from "./context/ThemeContext";
 
