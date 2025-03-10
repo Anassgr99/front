@@ -11,7 +11,7 @@ const Purchases = () => {
   useEffect(() => {
     const fetchReturns = async () => {
       try {
-        const response = await axios.get("http://192.168.1.7:3000/api/returns");
+        const response = await axios.get("http://localhost:3000/api/returns");
         setReturns(response.data.data);
       } catch (error) {
         console.error("Error fetching returns data:", error);
@@ -38,8 +38,17 @@ const Purchases = () => {
   ];
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="flex gap-2">
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+        </div>
+      </div>
+    );
   }
+  
 
   return (
     <>
@@ -102,13 +111,13 @@ const Purchases = () => {
             }}
             muiTopToolbarProps={{
               sx: {
-                backgroundColor: theme === "dark" ? "#edf6ff" : "#F3F4F6",
+                backgroundColor: theme === "dark" ? "#535C91" : "#F3F4F6",
                 color: theme === "dark" ? "#F9FAFB" : "#1F2937",
               },
             }}
             muiBottomToolbarProps={{
               sx: {
-                backgroundColor: theme === "dark" ? "#edf6ff" : "#F3F4F6",
+                backgroundColor: theme === "dark" ? "#535C91" : "#F3F4F6",
                 color: theme === "dark" ? "#F9FAFB" : "#1F2937",
               },
             }}

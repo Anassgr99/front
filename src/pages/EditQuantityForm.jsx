@@ -18,7 +18,7 @@ const EditQuantityForm = ({ storeId, productId, onClose, store }) => {
       }
 
       const response = await axios.post(
-        "http://192.168.1.7:3000/api/store-products/add",
+        "http://localhost:3000/api/store-products/add",
         {
           store_id: storeId,
           product_id: productId,
@@ -56,7 +56,7 @@ const EditQuantityForm = ({ storeId, productId, onClose, store }) => {
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-          <div>
+          {/* <div>
             <label htmlFor="store_id" className="block text-sm font-medium">
               Store
             </label>
@@ -76,7 +76,7 @@ const EditQuantityForm = ({ storeId, productId, onClose, store }) => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           <div>
             <label htmlFor="quantity" className="block text-sm font-medium">

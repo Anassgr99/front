@@ -11,14 +11,14 @@ const CategoryDetails = ({ categoryDetails }) => {
   const dispatch = useDispatch();
   const getstore = localStorage.getItem("store");
 
-// console.log(getstore,"éééééééééé");
+// //console.log(getstore,"éééééééééé");
 
   // Fetch stock quantities from the backend
   useEffect(() => {
     const fetchStockQuantities = async () => {
       try {
         const response = await fetch(
-          `http://192.168.1.7:3000/api/getStockQuantitiesByid/${customer.idStoreSelected}`
+          `http://localhost:3000/api/getStockQuantitiesByid/${customer.idStoreSelected}`
         );
         const data = await response.json();
 
@@ -69,7 +69,7 @@ const CategoryDetails = ({ categoryDetails }) => {
         const stockInfo = stockQuantities[item.id] || {}; // Get stock info for the product
         const isAccessible =
           stockInfo.store_id == getstore; // Check if the product belongs to the selected store
-// console.log(isAccessible,"isAccessible",stockInfo.store_id, "=,", customer.idStoreSelected);
+// //console.log(isAccessible,"isAccessible",stockInfo.store_id, "=,", customer.idStoreSelected);
 
         return (
           <motion.div

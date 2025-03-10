@@ -16,12 +16,12 @@ const StoreChart = () => {
   const [storeOrdersData, setStoreOrdersData] = useState([]);
   const [topProducts, setTopProducts] = useState([]);
 
-  console.log(topProducts);
+  //console.log(topProducts);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://192.168.1.7:3000/api/orders");
+        const response = await fetch("http://localhost:3000/api/orders");
         const data = await response.json();
 
         if (Array.isArray(data)) {

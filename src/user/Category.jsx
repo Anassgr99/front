@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CategoryDetails from './CategoryDetails';
 import { motion } from 'framer-motion';
 
+
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [categoryDetails, setCategoryDetails] = useState([]);
@@ -12,10 +13,10 @@ const Category = () => {
   // Dynamically load all icons from the `../assets/brands` folder
   const icons = import.meta.glob('../assets/brands/*.png', { eager: true });
   console.log("user", localStorage.getItem("customerId"));
-
+  console.log("Available icons:", Object.keys(icons));
   useEffect(() => {
     // Fetch categories from backend
-    fetch('http://192.168.1.7:3000/api/category')
+    fetch('http://localhost:3000/api/categorys')
       .then((response) => response.json())
       .then((data) => setCategories(data))
       .catch((error) => console.error('Error fetching categories:', error));
@@ -34,7 +35,7 @@ const Category = () => {
   }, [searchQuery, categoryDetails]);
 
   const getCategoryDetails = (categoryId) => {
-    fetch(`http://192.168.1.7:3000/api/productsC/${categoryId}`)
+    fetch(`http://localhost:3000/api/productsC/${categoryId}`)
       .then((response) => response.json())
       .then((data) => {
         setCategoryDetails(data);
@@ -63,33 +64,35 @@ const Category = () => {
         className="p-4 border-b-2 border-black flex items-center justify-between"
       >
         <div className="flex flex-row gap-4 overflow-x-auto scrollbar-hide ">
-          {categories.map((category) => {
-            // Dynamically import the category icon based on the category icon name
-            const categoryIcon = icons[`../assets/brands/${category.icon}.png`]?.default;
+        {categories.map((category) => {
+          const categoryIcon = category.icon.startsWith('http')
+            ? category.icon
+            : icons[`../assets/brands/${category.icon.endsWith('.png') ? category.icon : `${category.icon}.png`}`]?.default;
 
-            return (
-              <div
-                key={category.id}
-                onClick={() => handleCategoryClick(category.id)}
-                style={{
-                  cursor: 'pointer',
-                  borderRadius: '8px',
-                  padding: '10px',
-                  backgroundColor: category.bg || '#1E88E5',
-                }}
-                className="flex items-center justify-center flex-col min-w-[120px]"
-              >
-                <img
-                  src={categoryIcon} // Use dynamically imported icon
-                  alt={category.name}
-                  className="w-30 h-10 mb-2"
-                />
-                <h3 className="text-[#dfe3f4] font-bold text-center">
-                  {category.name}
-                </h3>
-              </div>
-            );
-          })}
+          return (
+            <div
+              key={category.id}
+              onClick={() => handleCategoryClick(category.id)}
+              style={{
+                cursor: 'pointer',
+                borderRadius: '8px',
+                padding: '10px',
+                backgroundColor: category.bg || '#1E88E5',
+              }}
+              className="flex items-center justify-center flex-col min-w-[120px]"
+            >
+              <img
+                src={categoryIcon}
+                alt={category.name}
+                className="w-30 h-10 mb-2"
+              />
+              <h3 className="text-[#dfe3f4] font-bold text-center">
+                {category.name}
+              </h3>
+            </div>
+          );
+        })}
+
         </div>
       </motion.div>
 
@@ -112,7 +115,7 @@ const Category = () => {
           <CategoryDetails categoryDetails={filteredDetails} />
         ) : (
           <small className="text-[#818497] ">
-            No products found for this category.
+            Aucun produit trouvé pour cette catégorie.
           </small>
         )}
       </div>

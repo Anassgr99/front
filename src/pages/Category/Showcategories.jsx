@@ -15,9 +15,9 @@ const Showcategories = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://192.168.1.7:3000/api/categorys");
+        const response = await axios.get("http://localhost:3000/api/categorys");
         setProducts(response.data); // Set fetched products
-        console.log(response.data);
+        //console.log(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -28,8 +28,8 @@ const Showcategories = () => {
   // Delete product by ID
   const deleteProduct = async (id) => {
     try {
-      await axios.delete(`http://192.168.1.7:3000/api/categorys/${id}`);
-      const response = await axios.get("http://192.168.1.7:3000/api/categorys");
+      await axios.delete(`http://localhost:3000/api/categorys/${id}`);
+      const response = await axios.get("http://localhost:3000/api/categorys");
       setProducts(response.data); // Update state with the new data
 
       alert("Category deleted successfully!");
@@ -47,7 +47,7 @@ const Showcategories = () => {
     },
     {
       accessorKey: "name",
-      header: "Nom",
+      header: "NOM",
     },
     {
       accessorKey: "slug",
@@ -151,13 +151,13 @@ const Showcategories = () => {
           }}
           muiTopToolbarProps={{
             sx: {
-              backgroundColor: theme === "dark" ? "#edf6ff" : "#F3F4F6",
+              backgroundColor: theme === "dark" ? "#535C91" : "#F3F4F6",
               color: theme === "dark" ? "#F9FAFB" : "#1F2937",
             },
           }}
           muiBottomToolbarProps={{
             sx: {
-              backgroundColor: theme === "dark" ? "#edf6ff" : "#F3F4F6",
+              backgroundColor: theme === "dark" ? "#535C91" : "#F3F4F6",
               color: theme === "dark" ? "#F9FAFB" : "#1F2937",
             },
           }}

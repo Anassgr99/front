@@ -30,7 +30,7 @@ const AddCustomer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://192.168.1.7:3000/api/customers', formData);
+      const response = await axios.post('http://localhost:3000/api/customers', formData);
       alert('Customer added successfully!');
       navigate('/customer'); // Navigate back to the customers list
     } catch (err) {

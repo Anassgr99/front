@@ -23,11 +23,11 @@ const CartItems = () => {
   const getstore = localStorage.getItem("store");
   const customer = localStorage.getItem("customerId");
   const user_name = localStorage.getItem("customerName") || "Unknown User";
+
   
-  console.log("customer",customer);
-  console.log("username",user_name);
   
   const handleCashPayment = async () => {
+
     if (cartItems.length === 0) {
       toast.error("Your cart is empty!");
     } else {
@@ -35,7 +35,6 @@ const CartItems = () => {
         const orderData = {
           customer_id: customer,
           order_date: new Date().toISOString(),
-          order_status: 1,
           total_products: cartItems.length,
           sub_total: total,
           vat: tax,
@@ -53,18 +52,22 @@ const CartItems = () => {
             total: item.quantity * item.price,
           })),
         };
+  
         const response = await axios.post(
-          "http://192.168.1.7:3000/api/orders",
+          "http://localhost:3000/api/orders",
           orderData
         );
-        toast.success(
-          `Order placed successfully! Order ID: ${response.data.orderId}`,
-          {
-            position: "top-center",
-            autoClose: 5000,
-          }
-        );
-        dispatch(removeAll()); // Clear the cart after order is placed
+       
+        
+  
+        toast.success(`Order placed successfully! Order ID: ${response.data.orderId}`, {
+          position: "top-center",
+          autoClose: 5000, // Toast kayban 5 sec
+        });
+        
+        dispatch(removeAll()); // Clear cart
+  
+       
       } catch (error) {
         toast.error(`Failed to place the order: ${error.message}`, {
           position: "top-center",
@@ -73,6 +76,7 @@ const CartItems = () => {
       }
     }
   };
+  
 
   const handleCreditPayment = async () => {
     if (cartItems.length === 0) {
@@ -82,7 +86,7 @@ const CartItems = () => {
         const orderData = {
           customer_id: customer,
           order_date: new Date().toISOString(),
-          order_status: 1,
+
           total_products: cartItems.length,
           sub_total: total,
           vat: tax,
@@ -101,7 +105,7 @@ const CartItems = () => {
           })),
         };
         const response = await axios.post(
-          "http://192.168.1.7:3000/api/orders",
+          "http://localhost:3000/api/orders",
           orderData
         );
         toast.success(
@@ -129,7 +133,7 @@ const CartItems = () => {
     const note = prompt("Please enter a note for the return (optional):", ""); // Prompt for a note
     if (note === null) return; // User canceled the action
 
-    // console.log(item);
+    // //console.log(item);
 
     // Dynamically populate returnData using the properties of the 'item'
     const returnData = {
@@ -140,11 +144,11 @@ const CartItems = () => {
       note: note || null, // Use the entered note or null if canceled
     };
 
-    // console.log(returnData); // Debugging log to see the final returnData
+    // //console.log(returnData); // Debugging log to see the final returnData
 
     try {
       // Send the returnData to your backend API
-      await axios.post("http://192.168.1.7:3000/api/returns", returnData);
+      await axios.post("http://localhost:3000/api/returns", returnData);
       toast.success("Return processed successfully!", {
         position: "top-center",
         autoClose: 5000,
@@ -168,10 +172,10 @@ const CartItems = () => {
       dispatch(updateQuantity({ id, quantity })); // Update the quantity of an item
     }
   };
-  {cartItems.map((curr, index) => 
-  console.log(curr.selling_price * curr.quantity)
+  // {cartItems.map((curr, index) => 
+  // //console.log(curr.selling_price * curr.quantity)
   
-  )}
+  // )}
   return (
     <div>
       <ToastContainer />
@@ -234,7 +238,7 @@ const CartItems = () => {
                             onClick={() => handleReturn(curr)}
                             className="px-2 py-1 text-white bg-red-500 rounded-full hover:bg-red-700 hover:scale-110 transition-all duration-200"
                           >
-                            Return
+                            Retour
                           </button>
                         </div>
                       </div>
@@ -244,7 +248,7 @@ const CartItems = () => {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center mt-24">
-                <small className="text-[#474c54]">No items in cart</small>
+                <small className="text-[#474c54]">Aucun article dans le panier</small>
               </div>
             )}
           </div>

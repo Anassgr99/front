@@ -10,14 +10,14 @@ import { ThemeContext } from "../../context/ThemeContext";
 const Products = () => {
   const [products, setProducts] = useState([]); // State to store products
   const navigate = useNavigate(); // Hook for navigation
-  // console.log(products);
+  console.log(products);
   const { theme } = useContext(ThemeContext);
 
   // Fetch products from API
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://192.168.1.7:3000/api/products");
+        const response = await axios.get("http://localhost:3000/api/products");
 
         setProducts(response.data); // Set fetched products
         console.log(response.data);
@@ -31,7 +31,7 @@ const Products = () => {
   // Delete product by ID
   const deleteProduct = async (id) => {
     try {
-      await axios.delete(`http://192.168.1.7:3000/api/products/${id}`);
+      await axios.delete(`http://localhost:3000/api/products/${id}`);
       setProducts(products.filter((product) => product.id !== id)); // Update state
       alert("Product deleted successfully!");
     } catch (error) {
@@ -50,47 +50,47 @@ const Products = () => {
       accessorKey: "code",
       header: "Code de produit",
     },
-    {
-      accessorKey: "quantity",
-      header: "Quantité",
-      Cell: ({ row }) => {
-        const quantity = row.original.quantity; // Current quantity
-        const quantityAlert = row.original.quantity_alert; // Alert threshold
+    // {
+    //   accessorKey: "quantity",
+    //   header: "Quantité",
+    //   Cell: ({ row }) => {
+    //     const quantity = row.original.quantity; // Current quantity
+    //     const quantityAlert = row.original.quantity_alert; // Alert threshold
 
-        // Determine the alert status
-        let alertStatus = "";
-        let alertColor = "";
-        let icon = null;
+    //     // Determine the alert status
+    //     let alertStatus = "";
+    //     let alertColor = "";
+    //     let icon = null;
 
-        if (quantity > quantityAlert) {
-          alertStatus = "Good ";
-          alertColor = "bg-green-500";
-          icon = <span className=" text-green-500"> </span>; // Green checkmark icon
-        } else if (quantity >= quantityAlert / 2 && quantity <= quantityAlert) {
-          alertStatus = "Low ";
-          alertColor = "bg-yellow-500 ";
-          icon = (
-            <span className="fi fi-alert-circle text-blue-500">
-              {" "}
-              <FiAlertTriangle />
-            </span>
-          ); // Yellow warning icon
-        } else if (quantity < quantityAlert / 2) {
-          alertStatus = "Warning ";
-          alertColor = "bg-red-500";
-          icon = <i className="fi fi-x-circle text-red-500"></i>; // Red error icon
-        }
+    //     if (quantity > quantityAlert) {
+    //       alertStatus = "Good ";
+    //       alertColor = "bg-green-500";
+    //       icon = <span className=" text-green-500"> </span>; // Green checkmark icon
+    //     } else if (quantity >= quantityAlert / 2 && quantity <= quantityAlert) {
+    //       alertStatus = "Low ";
+    //       alertColor = "bg-yellow-500 ";
+    //       icon = (
+    //         <span className="fi fi-alert-circle text-blue-500">
+    //           {" "}
+    //           <FiAlertTriangle />
+    //         </span>
+    //       ); // Yellow warning icon
+    //     } else if (quantity < quantityAlert / 2) {
+    //       alertStatus = "Warning ";
+    //       alertColor = "bg-red-500";
+    //       icon = <i className="fi fi-x-circle text-red-500"></i>; // Red error icon
+    //     }
 
-        return (
-          <div
-            className={`flex items-center justify-center rounded-2xl h-7 w-7 ${alertColor} font-semibold`}
-          >
-            <span>{quantity}</span>
-            {/* {icon} */}
-          </div>
-        );
-      },
-    },
+    //     return (
+    //       <div
+    //         className={`flex items-center justify-center rounded-2xl h-7 w-7 ${alertColor} font-semibold`}
+    //       >
+    //         <span>{quantity}</span>
+    //         {/* {icon} */}
+    //       </div>
+    //     );
+    //   },
+    // },
     {
       accessorKey: "buying_price",
       header: "Prix d'achat",
@@ -206,13 +206,13 @@ const Products = () => {
           }}
           muiTopToolbarProps={{
             sx: {
-              backgroundColor: theme === "dark" ? "#edf6ff" : "#F3F4F6",
+              backgroundColor: theme === "dark" ? "#535C91" : "#F3F4F6",
               color: theme === "dark" ? "#F9FAFB" : "#1F2937",
             },
           }}
           muiBottomToolbarProps={{
             sx: {
-              backgroundColor: theme === "dark" ? "#edf6ff" : "#F3F4F6",
+              backgroundColor: theme === "dark" ? "#535C91" : "#F3F4F6",
               color: theme === "dark" ? "#1F2937" : "#1F2937",
             },
           }}

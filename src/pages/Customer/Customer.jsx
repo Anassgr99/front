@@ -14,10 +14,10 @@ export const Customer = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await axios.get("http://192.168.1.7:3000/api/customers");
+        const response = await axios.get("http://localhost:3000/api/customers");
 
         setCustomers(response.data); // Set fetched customers
-        console.log(response.data);
+        //console.log(response.data);
       } catch (error) {
         console.error("Error fetching customers:", error);
       }
@@ -28,7 +28,7 @@ export const Customer = () => {
   // Delete customer by ID
   const deleteCustomer = async (id) => {
     try {
-      await axios.delete(`http://192.168.1.7:3000/api/customers/${id}`);
+      await axios.delete(`http://localhost:3000/api/customers/${id}`);
       setCustomers(customers.filter((customer) => customer.id !== id)); // Update state
       alert("Customer deleted successfully!");
     } catch (error) {
@@ -39,10 +39,10 @@ export const Customer = () => {
 
   // Define columns for the table
   const columns = [
-    {
-      accessorKey: "id",
-      header: "ID",
-    },
+    // {
+    //   accessorKey: "id",
+    //   header: "ID",
+    // },
     {
       accessorKey: "name",
       header: "Nom de Client",
@@ -72,7 +72,7 @@ export const Customer = () => {
             onClick={() => navigate(`/editCustomer/${row.original.id}`)}
             className="px-4 py-2 text-white bg-yellow-500 hover:bg-yellow-600 rounded-lg flex items-center gap-2"
           >
-            <FiEdit /> {/* Edit icon for "Edit" */}
+            <FiEdit /> 
             Modifier
           </button>
           <button
@@ -117,7 +117,7 @@ export const Customer = () => {
           }`}
            >
             <FiPlus className="mr-2" size={20} />
-                      Ajouter Customer
+                Ajouter Client
            </Link>
           </div>
         </div>
@@ -166,13 +166,13 @@ export const Customer = () => {
                       }}
                       muiTopToolbarProps={{
                         sx: {
-                          backgroundColor: theme === "dark" ? "#edf6ff" : "#F3F4F6",
+                          backgroundColor: theme === "dark" ? "#535C91" : "#F3F4F6",
                           color: theme === "dark" ? "#F9FAFB" : "#1F2937",
                         },
                       }}
                       muiBottomToolbarProps={{
                         sx: {
-                          backgroundColor: theme === "dark" ? "#edf6ff" : "#F3F4F6",
+                          backgroundColor: theme === "dark" ? "#535C91" : "#F3F4F6",
                           color: theme === "dark" ? "#F9FAFB" : "#1F2937",
                         },
                       }}

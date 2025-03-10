@@ -16,11 +16,11 @@ const StoreProductTable = () => {
     setLoading(true); // Start loading
     try {
       const [response, storeResponse] = await Promise.all([
-        axios.get("http://192.168.1.7:3000/api/store-products"),
-        axios.get("http://192.168.1.7:3000/api/stores"),
+        axios.get("http://localhost:3000/api/store-products"),
+        axios.get("http://localhost:3000/api/stores"),
       ]);
-      console.log(response.data);
-      
+      //console.log(response.data);
+
       setStoreProducts(response.data);
       setStores(storeResponse.data); // Set stores data
       setLoading(false); // Stop loading
@@ -46,38 +46,43 @@ const StoreProductTable = () => {
   const columns = [
     {
       accessorKey: "product_name",
-      header: "Product Name",
+      header: "Nom du produit",
     },
     {
       accessorKey: "quantity",
-      header: "Quantity",
+      header: "Quantité",
       Cell: ({ row }) => {
         const quantity = row.original.quantity; // Current quantity
         const quantityAlert = row.original.quantity_alert; // Alert threshold
 
-        let alertStatus = '';
-        let alertColor = '';
+        let alertStatus = "";
+        let alertColor = "";
         let icon = null;
 
         if (quantity > quantityAlert) {
-          alertStatus = 'Good ';
-          alertColor = 'bg-green-500';
+          alertStatus = "Good ";
+          alertColor = "bg-green-500";
           icon = <span className=" text-green-500"> </span>; // Green checkmark icon
         } else if (quantity >= quantityAlert / 2 && quantity <= quantityAlert) {
-          alertStatus = 'Low ';
-          alertColor = 'bg-yellow-500 ';
-          icon = <span className="fi fi-alert-circle text-blue-500"> <FiAlertTriangle /></span>; // Yellow warning icon
+          alertStatus = "Low ";
+          alertColor = "bg-yellow-500 ";
+          icon = (
+            <span className="fi fi-alert-circle text-blue-500">
+              {" "}
+              <FiAlertTriangle />
+            </span>
+          ); // Yellow warning icon
         } else if (quantity < quantityAlert / 2) {
-          alertStatus = 'Warning ';
-          alertColor = 'bg-red-500';
+          alertStatus = "Warning ";
+          alertColor = "bg-red-500";
           icon = <i className="fi fi-x-circle text-red-500"></i>; // Red error icon
         }
 
         return (
-          <div className={`flex items-center justify-center rounded-2xl h-7 w-7 ${alertColor} font-semibold`}>
-            <span>
-              {quantity} 
-            </span>
+          <div
+            className={`flex items-center justify-center rounded-2xl h-7 w-7 ${alertColor} font-semibold`}
+          >
+            <span>{quantity}</span>
           </div>
         );
       },
@@ -104,12 +109,24 @@ const StoreProductTable = () => {
   ];
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="flex gap-2">
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+        </div>
+      </div>
+    );
   }
 
   return (
     <>
-      <div>
+      <div  className={`col-span-12  ${
+            theme === "dark"
+              ? "bg-gray-900 text-white"
+              : "bg-white text-gray-800"
+          } shadow-lg h-[500px]`}>
         <div
           className={`col-span-12  ${
             theme === "dark"
@@ -118,7 +135,7 @@ const StoreProductTable = () => {
           } shadow-lg`}
         >
           <h3 className="text-lg p-4 rounded-t-xl font-medium">
-            Store Products
+            Produits du magasin
           </h3>
         </div>
 
@@ -168,20 +185,20 @@ const StoreProductTable = () => {
             }}
             muiTopToolbarProps={{
               sx: {
-                backgroundColor: theme === "dark" ? "#edf6ff" : "#F3F4F6",
+                backgroundColor: theme === "dark" ? "#535C91" : "#F3F4F6",
                 color: theme === "dark" ? "#F9FAFB" : "#1F2937",
               },
             }}
             muiBottomToolbarProps={{
               sx: {
-                backgroundColor: theme === "dark" ? "#edf6ff" : "#F3F4F6",
+                backgroundColor: theme === "dark" ? "#535C91" : "#F3F4F6",
                 color: theme === "dark" ? "#F9FAFB" : "#1F2937",
               },
             }}
           />
         </div>
       </div>
-      {editingProduct && ( 
+      {editingProduct && (
         <EditQuantityForm
           storeId={editingProduct.storeId}
           productId={editingProduct.productId}

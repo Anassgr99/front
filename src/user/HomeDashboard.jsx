@@ -10,7 +10,7 @@ import {
   FiSun,
   FiTrash,
   FiX,
-  FiLogOut
+  FiLogOut,
 } from "react-icons/fi";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -23,8 +23,7 @@ const cartReducer = (state, action) => {
     case "ADD_TO_CART": {
       const existingItem = state.find(
         (item) =>
-          item.id === action.payload.product_id ||
-          item.id === action.payload.id
+          item.id === action.payload.product_id || item.id === action.payload.id
       );
       const product = action.payload;
       const maxQuantity = product.quantity;
@@ -72,11 +71,11 @@ const ProductCard = ({ product, dispatch, cart = [], theme }) => {
     const existingItem = cart.find((item) => item.id === product.id);
     const maxQuantity = product.quantity;
     if (existingItem && existingItem.quantity >= maxQuantity) {
-      toast.error("You can't add more of this product to the cart.");
+      toast.error("Vous ne pouvez pas ajouter plus de cet article au panier.");
       return;
     }
     if (product.quantity === 0) {
-      toast.error("This product is out of stock.");
+      toast.error("Ce produit est en rupture de stock.");
       return;
     }
     dispatch({ type: "ADD_TO_CART", payload: { ...product, quantity: 1 } });
@@ -128,7 +127,7 @@ const ProductCard = ({ product, dispatch, cart = [], theme }) => {
           )
         }
       >
-        Add to Cart
+        Ajouter au panier
       </button>
     </div>
   );
@@ -189,27 +188,42 @@ const CalculatorCard = ({
         }`}
       />
       <div className="grid grid-cols-4 gap-2">
-        {[1, 2, 3, "Qté", 4, 5, 6, "%", 7, 8, 9, "Prix", "+/-", 0, ",", "⌫"].map(
-          (item, index) => (
-            <button
-              key={index}
-              onClick={() => handleButtonClick(item)}
-              className={`p-4 text-lg font-semibold rounded transition duration-200 ${
-                item === "Prix"
-                  ? "bg-blue-500 text-white hover:bg-blue-600"
-                  : item === "+/-"
-                  ? "bg-yellow-500 text-black hover:bg-yellow-600"
-                  : item === ","
-                  ? "bg-red-500 text-white hover:bg-red-600"
-                  : theme === "dark"
-                  ? "bg-gray-700 text-white hover:bg-gray-600"
-                  : "bg-gray-200 text-black hover:bg-gray-300"
-              }`}
-            >
-              {item}
-            </button>
-          )
-        )}
+        {[
+          1,
+          2,
+          3,
+          "Qté",
+          4,
+          5,
+          6,
+          "%",
+          7,
+          8,
+          9,
+          "Prix",
+          "+/-",
+          0,
+          ",",
+          "⌫",
+        ].map((item, index) => (
+          <button
+            key={index}
+            onClick={() => handleButtonClick(item)}
+            className={`p-4 text-lg font-semibold rounded transition duration-200 ${
+              item === "Prix"
+                ? "bg-blue-500 text-white hover:bg-blue-600"
+                : item === "+/-"
+                ? "bg-yellow-500 text-black hover:bg-yellow-600"
+                : item === ","
+                ? "bg-red-500 text-white hover:bg-red-600"
+                : theme === "dark"
+                ? "bg-gray-700 text-white hover:bg-gray-600"
+                : "bg-gray-200 text-black hover:bg-gray-300"
+            }`}
+          >
+            {item}
+          </button>
+        ))}
       </div>
     </div>
   );
@@ -234,27 +248,26 @@ const Cart = ({ cart, dispatch, handlePayment, product, theme }) => {
     0
   );
 
-// this useEffect to fetch customers on component mount
-useEffect(() => {
-  axios.get("http://192.168.1.7:3000/api/customers")
-    .then(response => {
-      setCustomers(response.data);
-      // Set default customer to first in list (id 1)
-      if (response.data.length > 0) {
-        const defaultCustomer = response.data.find(c => c.id === 1);
-        setSelectedCustomer(defaultCustomer || response.data[0]);
-      }
-    })
-    .catch(error => console.error("Error fetching customers:", error));
-}, []); // Empty dependency array = runs once on mount
+  // this useEffect to fetch customers on component mount
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/customers")
+      .then((response) => {
+        setCustomers(response.data);
+        // Set default customer to first in list (id 1)
+        if (response.data.length > 0) {
+          const defaultCustomer = response.data.find((c) => c.id === 1);
+          setSelectedCustomer(defaultCustomer || response.data[0]);
+        }
+      })
+      .catch((error) => console.error("Error fetching customers:", error));
+  }, []); // Empty dependency array = runs once on mount
   useEffect(() => {
     if (showModal) {
       axios
-        .get("http://192.168.1.7:3000/api/customers")
+        .get("http://localhost:3000/api/customers")
         .then((response) => setCustomers(response.data))
-        .catch((error) =>
-          console.error("Error fetching customers:", error)
-        );
+        .catch((error) => console.error("Error fetching customers:", error));
     }
   }, [showModal]);
   const filteredCustomers = customers.filter((customer) =>
@@ -308,7 +321,6 @@ useEffect(() => {
     setShowModal(false);
     localStorage.setItem("customer", customer.name);
     toast.success(`Customer selected: ${customer.name}`);
-
   };
 
   // Bulk return handler (uses note from modal)
@@ -324,15 +336,17 @@ useEffect(() => {
             name_produit: item.product_name,
             name_user: localStorage.getItem("customer"), // Update with actual user info
             quantity: item.quantity,
-            store_name: "Main Store",  // Update with actual store info
+            store_name: "Main Store", // Update with actual store info
             note: returnNote || "Bulk return from cart",
           };
           const response = await axios.post(
-            "http://192.168.1.7:3000/api/returns", // Updated endpoint
+            "http://localhost:3000/api/returns", // Updated endpoint
             returnData
           );
           if (response.status !== 201) {
-            throw new Error("Failed to process return for " + item.product_name);
+            throw new Error(
+              "Failed to process return for " + item.product_name
+            );
           }
         })
       );
@@ -352,9 +366,9 @@ useEffect(() => {
         theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
       }`}
     >
-      <h2 className="text-xl font-bold mb-4">Your Cart</h2>
+      <h2 className="text-xl font-bold mb-4">Votre panier</h2>
       {cart.length === 0 ? (
-        <p className="text-gray-500">Your cart is empty.</p>
+        <p className="text-gray-500">Votre panier est vide.</p>
       ) : (
         <>
           <ul className="space-y-4">
@@ -375,7 +389,7 @@ useEffect(() => {
                     }}
                     className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center transition"
                   >
-                    <FiEdit className="mr-1" /> Edit
+                    <FiEdit className="mr-1" /> Modifier
                   </button>
                   <button
                     onClick={() => {
@@ -387,7 +401,7 @@ useEffect(() => {
                     }}
                     className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 flex items-center transition"
                   >
-                    <FiTrash className="mr-1" /> Remove
+                    <FiTrash className="mr-1" /> Supprimer
                   </button>
                 </div>
               </li>
@@ -400,7 +414,9 @@ useEffect(() => {
           <button
             onClick={() => setShowModal(true)}
             className={`mt-4 p-2 m-2 transition ${
-              theme === "dark" ? "bg-gray-500 text-white" : "bg-white text-black"
+              theme === "dark"
+                ? "bg-gray-500 text-white"
+                : "bg-white text-black"
             }`}
           >
             {selectedCustomer
@@ -417,11 +433,13 @@ useEffect(() => {
             >
               <div
                 className={`w-96 p-6 rounded-2xl shadow-xl transition-all ${
-                  theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
+                  theme === "dark"
+                    ? "bg-gray-900 text-white"
+                    : "bg-white text-black"
                 }`}
               >
                 <div className="flex justify-between items-center border-b pb-3">
-                  <h2 className="text-xl font-semibold">Choose a Customer</h2>
+                  <h2 className="text-xl font-semibold">Choisissez un client</h2>
                   <button
                     className="text-red-500 hover:text-red-700 transition"
                     onClick={() => setShowModal(false)}
@@ -458,13 +476,15 @@ useEffect(() => {
                           onClick={() => handleCustomerSelect(customer)}
                         >
                           <span>{customer.name}</span>
-                          <p className="text-sm text-gray-400">{customer.email}</p>
+                          <p className="text-sm text-gray-400">
+                            {customer.email}
+                          </p>
                         </li>
                       ))}
                     </ul>
                   ) : (
                     <p className="text-gray-500 text-center mt-4">
-                      No customers found.
+                      Aucun client trouvé.
                     </p>
                   )}
                 </div>
@@ -473,7 +493,7 @@ useEffect(() => {
                     className="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 transition"
                     onClick={() => setShowModal(false)}
                   >
-                    Close
+                    Fermer
                   </button>
                 </div>
               </div>
@@ -489,44 +509,51 @@ useEffect(() => {
             />
           )}
           <div className="flex space-x-4 mt-4">
-          <button
-            onClick={() => dispatch({ type: "CLEAR_CART" })}
-            className="w-full px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition"
-          >
+            <button
+              onClick={() => dispatch({ type: "CLEAR_CART" })}
+              className="w-full px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600 transition"
+            >
+              Vider le panier
+            </button>
+            <button
+              onClick={() => handlePayment("Cash", selectedCustomer)}
+              className="w-full px-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 transition"
+            >
+              Cash
+            </button>
 
-                        Clear Cart
-                        </button>
-        <button 
-            onClick={() => handlePayment("Cash", selectedCustomer)} 
-            className="w-full px-4 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 transition"
-          >
-            Cash
-          </button>
+            <button
+              onClick={() =>
+                selectedCustomer?.name === customers[0]?.name
+                  ? null
+                  : handlePayment("Credit", selectedCustomer)
+              }
+              className={`w-full px-4 py-2 ${
+                selectedCustomer?.name === customers[0]?.name
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-orange-500 hover:bg-orange-600"
+              } text-white font-semibold rounded transition`}
+              disabled={selectedCustomer?.name === customers[0]?.name}
+            >
+              Credit
+            </button>
 
-          <button 
-            onClick={() => selectedCustomer?.name === customers[0]?.name ? null : handlePayment("Credit", selectedCustomer)}
-            className={`w-full px-4 py-2 ${
-              selectedCustomer?.name === customers[0]?.name 
-                ? "bg-gray-400 cursor-not-allowed" 
-                : "bg-orange-500 hover:bg-orange-600"
-            } text-white font-semibold rounded transition`}
-            disabled={selectedCustomer?.name === customers[0]?.name}
-          >
-            Credit
-          </button>
-
-          {/* Return Button only enables if not the first customer */}
-          <button 
-            onClick={() => selectedCustomer?.name === customers[0]?.name ? null : setShowReturnModal(true)}
-            className={`w-full px-4 py-2 ${
-              selectedCustomer?.name === customers[0]?.name 
-                ? "bg-gray-400 cursor-not-allowed" 
-                : "bg-blue-500 hover:bg-blue-600"
-            } text-white font-semibold rounded transition`}
-            disabled={selectedCustomer?.name === customers[0]?.name}
-          >
-            Return
-          </button>
+            {/* Return Button only enables if not the first customer */}
+            <button
+              onClick={() =>
+                selectedCustomer?.name === customers[0]?.name
+                  ? null
+                  : setShowReturnModal(true)
+              }
+              className={`w-full px-4 py-2 ${
+                selectedCustomer?.name === customers[0]?.name
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600"
+              } text-white font-semibold rounded transition`}
+              disabled={selectedCustomer?.name === customers[0]?.name}
+            >
+              Retour
+            </button>
           </div>
           {/* Return Modal */}
           {showReturnModal && (
@@ -547,13 +574,13 @@ useEffect(() => {
                     }}
                     className="px-4 py-2 bg-gray-500 text-white rounded"
                   >
-                    Cancel
+                    Annuler
                   </button>
                   <button
                     onClick={handleBulkReturn}
                     className="px-4 py-2 bg-blue-500 text-white rounded"
                   >
-                    Submit Return
+                    Soumettre le retour
                   </button>
                 </div>
               </div>
@@ -597,7 +624,12 @@ function CustomNextArrow(props) {
         viewBox="0 0 24 24"
         stroke="currentColor"
       >
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M9 5l7 7-7 7"
+        />
       </svg>
     </div>
   );
@@ -617,23 +649,28 @@ function CustomPrevArrow(props) {
         viewBox="0 0 24 24"
         stroke="currentColor"
       >
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M15 19l-7-7 7-7"
+        />
       </svg>
     </div>
   );
 }
 
 // -----------------
-// CarouselSubCategoryFilter Component
+// Updated CarouselSubCategoryFilter Component
 const CarouselSubCategoryFilter = ({
   categories,
   mainCategory,
   selectedSubCategory,
   setSelectedSubCategory,
+  theme,
 }) => {
   const subCategories = getSubCategories(categories, mainCategory);
-  // console.log(subCategories);
-  
+
   if (subCategories.length === 0) return null;
 
   const settings = {
@@ -654,7 +691,7 @@ const CarouselSubCategoryFilter = ({
         <div className="relative left-10">
           <button
             onClick={() => setSelectedSubCategory(null)}
-            className={`px-4 py-2 rounded  ${
+            className={`px-4 py-2 rounded ${
               selectedSubCategory === null
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700"
@@ -664,21 +701,23 @@ const CarouselSubCategoryFilter = ({
           </button>
         </div>
         {subCategories.map((cat) => (
-          
-            <div key={cat.id} className={` border-r-8 bg-gray-100   h-16 ${
-              selectedSubCategory === null
-                ?  "border-black "
-                :"border-white "
-            }`} >
-
-<img
-  src={`/images/${cat.icon}.png`}
-  alt={cat.slug}
-  className={`w-full h-full object-cover bg-white-500 ${
-    selectedSubCategory === cat.id ? "bg-blue-500" : "bg-gray-200"
-  }`}
-/>
-
+          <div
+            key={cat.id}
+            className={`border-r-8 bg-gray-100 h-16 ${
+              theme === 'dark' ? "border-black" : "border-gray-100"
+            }`}
+            onClick={() => setSelectedSubCategory(cat.id)}
+            style={{ cursor: 'pointer' }}
+          >
+            <img
+              src={`/images/${cat.icon}.png`}
+              alt={cat.slug}
+              className={`w-full h-full object-cover transition-all ${
+                selectedSubCategory === cat.id 
+                  ? "bg-blue-500 border-2 border-blue-600" 
+                  : "bg-gray-200"
+              }`}
+            />
           </div>
         ))}
       </Slider>
@@ -734,18 +773,17 @@ const HomeDashboard = () => {
   const StoreTrue = StoreUser === id;
 
   // Handle logout
-const handleLogout = () => {
-  localStorage.removeItem("token");
-  navigate("/login");
-};
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://192.168.1.7:3000/api/categorys/");
+        const response = await fetch("http://localhost:3000/api/categorys/");
 
-        if (!response.ok)
-          throw new Error("Error fetching categories");
+        if (!response.ok) throw new Error("Error fetching categories");
         const data = await response.json();
         setCategories(data);
       } catch (error) {
@@ -761,7 +799,7 @@ const handleLogout = () => {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://192.168.1.7:3000/api/getStockQuantitiesByid/${id}`
+          `http://localhost:3000/api/getStockQuantitiesByid/${id}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -788,7 +826,10 @@ const handleLogout = () => {
               )
               .map((cat) => cat.id),
           };
-          if (groups[selectedMainCategory] && groups[selectedMainCategory].length > 0) {
+          if (
+            groups[selectedMainCategory] &&
+            groups[selectedMainCategory].length > 0
+          ) {
             filteredProducts = data.filter((product) =>
               groups[selectedMainCategory].includes(product.category_id)
             );
@@ -807,8 +848,7 @@ const handleLogout = () => {
     fetchProducts();
   }, [selectedMainCategory, selectedSubCategory, searchQuery, id, categories]);
 
-  const toggleTheme = () =>
-    setTheme(theme === "dark" ? "light" : "dark");
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   // Payment function
   const handlePayment = async (paymentType, selectedCustomer) => {
@@ -823,12 +863,11 @@ const handleLogout = () => {
       );
       // Retrieve the store id from local storage
       const storeId = localStorage.getItem("store");
-      const tax = total * 0.2;
+      const tax = total * 0.0;
       const subTotal = total + tax;
       const orderData = {
         customer_id: selectedCustomer.id,
         order_date: new Date().toISOString(),
-        order_status: 1,
         total_products: cart.length,
         sub_total: total,
         vat: tax,
@@ -846,12 +885,18 @@ const handleLogout = () => {
           order_store: storeId, // Using the store id from local storage
         })),
       };
-      const response = await axios.post("http://192.168.1.7:3000/api/orders", orderData);
+      const response = await axios.post(
+        "http://localhost:3000/api/orders",
+        orderData
+      );
       if (response.data && response.data.orderId) {
         toast.success(
-          `Order placed successfully! Order ID: ${response.data.orderId}`
+          `Order placed successfully! Order ID: INV-${Date.now()}`
         );
         dispatch({ type: "CLEAR_CART" });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else {
         throw new Error("Invalid response from server.");
       }
@@ -859,7 +904,6 @@ const handleLogout = () => {
       toast.error(`Failed to place the order: ${error.message}`);
     }
   };
-  
 
   return (
     <div
@@ -869,43 +913,46 @@ const handleLogout = () => {
     >
       {/* Header */}
       <div className="p-2 shadow-lg flex justify-between items-center bg-gradient-to-r from-blue-600 to-purple-600">
-  <div>
-    <Link to="/isStore" className="text-xl font-bold tracking-wide">
-      🏪 ALL STORES
-    </Link>
-  </div>
-  <div className="relative w-full max-w-md">
-    <input
-      type="text"
-      placeholder="Search products..."
-      className="w-full pl-10 pr-4 py-2 border rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-    />
-    <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-  </div>
-  {/* Group the two buttons on the right */}
-  <div className="flex items-center gap-2">
-    <button
-      onClick={toggleTheme}
-      className="p-2 bg-white rounded-full shadow-md hover:scale-110 transition-all"
-    >
-      {theme === "dark" ? (
-        <FiSun size={24} className="text-yellow-500" />
-      ) : (
-        <FiMoon size={24} className="text-gray-800" />
-      )}
-    </button>
-    <button
-      onClick={handleLogout}
-      className="flex items-center bg-white text-red-600 px-4 py-2 rounded-lg shadow hover:bg-red-600 hover:text-white transition"
-    >
-      <span className="pr-2">Deconnecter</span>
-      <FiLogOut className="text-xl" />
-    </button>
-  </div>
-</div>
-
+        <div>
+          <Link to="/isStore" className="text-xl font-bold tracking-wide">
+            <img
+              src={logo}
+              alt="logo"
+              className="w-38 h-14 object-contain"
+            />
+          </Link>
+        </div>
+        <div className="relative w-full max-w-md">
+          <input
+            type="text"
+            placeholder="Search products..."
+            className="w-full pl-10 pr-4 py-2 border rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+        </div>
+        {/* Group the two buttons on the right */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={toggleTheme}
+            className="p-2 bg-white rounded-full shadow-md hover:scale-110 transition-all"
+          >
+            {theme === "dark" ? (
+              <FiSun size={24} className="text-yellow-500" />
+            ) : (
+              <FiMoon size={24} className="text-gray-800" />
+            )}
+          </button>
+          <button
+            onClick={handleLogout}
+            className="flex items-center bg-white text-red-600 px-4 py-2 rounded-lg shadow hover:bg-red-600 hover:text-white transition"
+          >
+            <span className="pr-2">Déconnecter</span>
+            <FiLogOut className="text-xl" />
+          </button>
+        </div>
+      </div>
 
       {/* Main Content */}
       <div className="flex ">
@@ -921,10 +968,21 @@ const handleLogout = () => {
             mainCategory={selectedMainCategory}
             selectedSubCategory={selectedSubCategory}
             setSelectedSubCategory={setSelectedSubCategory}
+            theme={theme}
+
           />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {loading ? (
-              <p>Loading...</p>
+             
+                  <div className="flex items-center justify-center h-screen">
+                    <div className="flex gap-2">
+                      <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+                      <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+                      <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+                    </div>
+                  </div>
+                
+              
             ) : (
               products.map((product) => (
                 <ProductCard

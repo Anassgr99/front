@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Layout from "./components/Layout";
 import Login from "./components/Login";
-import IsUser from "./pages/IsUser.jsx";
+import IsUser from "./pages/IsUser";
 import HomeStore from "./user/HomeStore";
 import { ThemeProvider } from "./context/ThemeContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Lazy loading for better performance
 const Dashboard = lazy(() => import("./components/Dashboard"));
@@ -59,7 +61,18 @@ const App = () => {
   return (
     <ThemeProvider>
       <Router>
-        <Suspense fallback={<div>Loading...</div>}>
+      <ToastContainer />
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center h-screen">
+              <div className="flex gap-2">
+                <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+                <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+                <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+              </div>
+            </div>
+          }
+        >
           <Routes>
             {/* Public Routes */}
             <Route path="/login" element={<Login />} />

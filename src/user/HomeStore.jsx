@@ -19,7 +19,7 @@ const HomeStore = () => {
   useEffect(() => {
     const fetchStores = async () => {
       try {
-        const response = await fetch("http://192.168.1.7:3000/api/stores");
+        const response = await fetch("http://localhost:3000/api/stores");
         if (!response.ok) throw new Error("Failed to fetch stores.");
         const data = await response.json();
         setStores(data);
@@ -76,7 +76,7 @@ const HomeStore = () => {
             onClick={handleLogout}
             className="flex items-center bg-white text-red-600 px-4 py-2 rounded-lg shadow hover:bg-red-600 hover:text-white transition"
           >
-            <span className="pr-2">Deconnecter</span>
+            <span className="pr-2">Déconnecter</span>
             <FiLogOut className="text-xl" />
           </button>
         </div>
@@ -131,13 +131,13 @@ const HomeStore = () => {
                     to={`/isUser/${store.id}`}
                     className="mt-4 block text-center bg-white text-black py-2 px-4 rounded-lg hover:bg-gray-200 transition-all"
                   >
-                    View Store
+                    Voir la boutique
                   </Link>
                 </div>
               ))
             ) : (
               <p className="text-center col-span-full text-lg font-semibold">
-                No stores found.
+                Aucune boutique trouvée.
               </p>
             )}
           </div>

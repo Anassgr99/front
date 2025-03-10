@@ -13,7 +13,6 @@ const Dashboard = () => {
     customers: [],
     users: [],
   });
-  console.log(data.products);
 
   const [storeFilter, setStoreFilter] = useState(null);
 
@@ -21,10 +20,10 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const urls = [
-          "http://192.168.1.7:3000/api/products",
-          "http://192.168.1.7:3000/api/orders",
-          "http://192.168.1.7:3000/api/customers",
-          "http://192.168.1.7:3000/api/users",
+          "http://localhost:3000/api/products",
+          "http://localhost:3000/api/orders",
+          "http://localhost:3000/api/customers",
+          "http://localhost:3000/api/users",
         ];
         const [products, orders, customers, users] = await Promise.all(
           urls.map((url) => fetch(url).then((res) => res.json()))
@@ -60,25 +59,25 @@ const Dashboard = () => {
   const cards = [
     {
       icon: <FiShoppingCart />,
-      title: "Total Orders",
+      title: "Total des commandes",
       value: data.orders.length,
       color: "text-blue-500",
     },
     {
       icon: <FiPackage />,
-      title: "Total Products",
+      title: "Total des produits",
       value: data.products.length,
       color: "text-red-500",
     },
     {
       icon: <FiUsers />,
-      title: "Total Customers",
+      title: "Total des clients",
       value: data.customers.length,
       color: "text-orange-500",
     },
     {
       icon: <FiUser />,
-      title: "Total Users",
+      title: "Total des utilisateurs",
       value: data.users.length,
       color: "text-green-500",
     },

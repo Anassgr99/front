@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 const Cart = () => {
   const customer = useSelector((state) => state.customer);
   const dispatch = useDispatch();
-  console.log("customer", customer);
+  //console.log("customer", customer);
 
   return (
     <div>

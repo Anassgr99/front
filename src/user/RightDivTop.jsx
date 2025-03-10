@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const RightDivTop = () => {
   const user = localStorage.getItem("userInfo") || {}; // Fallback to an empty object
-  console.log(user);
+  //console.log(user);
 
   const navigate = useNavigate();
 

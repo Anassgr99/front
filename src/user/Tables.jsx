@@ -34,7 +34,7 @@ const Tables = ({ onClick }) => {
     "#735F32",
     "#285430",
   ];
-  console.log("tables", tables);
+  //console.log("tables", tables);
 
   const customerDetails = {
     name: name,
@@ -43,7 +43,7 @@ const Tables = ({ onClick }) => {
     tableNum: tables[selectedId]?.store_name,
     idStoreSelected: tables[selectedId]?.id,
   };
-  console.log("customerDetails", customerDetails);
+  //console.log("customerDetails", customerDetails);
 
   const cancelButtonRef = useRef(null);
 
@@ -82,7 +82,7 @@ const Tables = ({ onClick }) => {
   useEffect(() => {
     const fetchTables = async () => {
       try {
-        const response = await axios.get("http://192.168.1.7:3000/api/stores");
+        const response = await axios.get("http://localhost:3000/api/stores");
         setTables(response.data); // Assuming the backend returns a list of tables
       } catch (error) {
         console.error("Error fetching table data:", error);
@@ -94,8 +94,8 @@ const Tables = ({ onClick }) => {
   // Fetch customers from the backend
   const fetchCustomers = async () => {
     try {
-      const response = await axios.get("http://192.168.1.7:3000/api/customers");
-      console.log("Fetched customers data:", response.data);
+      const response = await axios.get("http://localhost:3000/api/customers");
+      //console.log("Fetched customers data:", response.data);
       if (Array.isArray(response.data)) {
         setCustomers(response.data); // Update state with the customers array
       } else {
@@ -110,7 +110,7 @@ const Tables = ({ onClick }) => {
 
   // Debug state updates
   useEffect(() => {
-    console.log("Modal Open state has changed:", open);
+    //console.log("Modal Open state has changed:", open);
   }, [open]);
   const handleCustomerSelect = (customer) => {
     if (customer && customer.name && customer.id) {
@@ -119,7 +119,7 @@ const Tables = ({ onClick }) => {
       // Store the customer's name in localStorage
       localStorage.setItem("customerId", customer.id);
 
-      console.log("Selected customer:", customer.id, customer.name); // Log customer id and name
+      //console.log("Selected customer:", customer.id, customer.name); // Log customer id and name
     } else {
       console.error("Invalid customer object:", customer);
     }
@@ -232,7 +232,7 @@ const Tables = ({ onClick }) => {
                         as="h3"
                         className="text-lg font-medium leading-6 text-gray-900"
                       >
-                        Customer Details{" "}
+                        Détails du client{" "}
                         <small>of {tables[selectedId]?.store_name}</small>
                       </Dialog.Title>
                       <div className="mt-2">
@@ -258,7 +258,7 @@ const Tables = ({ onClick }) => {
                             handleCustomerSelect(selectedCustomer);
                           }}
                         >
-                          <option value="">Select a customer</option>
+                          <option value="">Sélectionner un client</option>
                           {customers.map((customer) => (
                             <option key={customer.id} value={customer.name}>
                               {customer.name} --- {customer.phone}
@@ -274,7 +274,7 @@ const Tables = ({ onClick }) => {
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
                       onClick={next}
                     >
-                      Next
+                      Suivant
                     </button>
                   </div>
                 </Dialog.Panel>

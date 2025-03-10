@@ -32,12 +32,12 @@ const EditProduct = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://192.168.1.7:3000/api/products/${id}`
+          `http://localhost:3000/api/products/${id}`
         );
         setProduct(response.data); // Update state with fetched data
-        console.log(response.data);
+        //console.log(response.data);
 
-        console.log("Product fetched successfully:", response.data);
+        //console.log("Product fetched successfully:", response.data);
       } catch (error) {
         console.error("Error fetching product:", error);
         alert("Failed to fetch product. Please try again.");
@@ -45,7 +45,7 @@ const EditProduct = () => {
     };
     const fetchUnits = async () => {
       try {
-        const response = await axios.get("http://192.168.1.7:3000/api/unit/");
+        const response = await axios.get("http://localhost:3000/api/unit/");
         setUnits(response.data); // Set the units state with the fetched data
       } catch (error) {
         console.error("Error fetching units:", error);
@@ -54,7 +54,7 @@ const EditProduct = () => {
     };
     const fetchCategory = async () => {
       try {
-        const response = await axios.get("http://192.168.1.7:3000/api/categorys/");
+        const response = await axios.get("http://localhost:3000/api/categorys/");
         setCategory(response.data); // Set the units state with the fetched data
       } catch (error) {
         console.error("Error fetching units:", error);
@@ -85,14 +85,14 @@ const EditProduct = () => {
       unit_name,
       ...productToUpdate
     } = product;
-    console.log("data", product);
+    //console.log("data", product);
 
     try {
       const response = await axios.put(
-        `http://192.168.1.7:3000/api/products/${id}`,
+        `http://localhost:3000/api/products/${id}`,
         productToUpdate
       );
-      console.log("Product updated successfully:", response);
+      //console.log("Product updated successfully:", response);
       alert("Product updated successfully!");
       navigate("/products"); // Redirect to the product list
     } catch (error) {
@@ -103,7 +103,7 @@ const EditProduct = () => {
 
   return (
     <div className={`container mx-auto p-8 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-    <h1 className="text-2xl font-bold mb-6">Edit Product</h1>
+    <h1 className="text-2xl font-bold mb-6">Modifier le produit</h1>
 
     <form
       onSubmit={handleSubmit}
@@ -112,7 +112,7 @@ const EditProduct = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {/* Name */}
         <div className="flex flex-col">
-          <label className="text-lg font-medium mb-2">Name:</label>
+          <label className="text-lg font-medium mb-2">Nom:</label>
           <input
             type="text"
             name="name"
@@ -149,8 +149,8 @@ const EditProduct = () => {
         </div>
 
         {/* Quantity */}
-        <div className="flex flex-col">
-          <label className="text-lg font-medium mb-2">Quantity:</label>
+        {/* <div className="flex flex-col">
+          <label className="text-lg font-medium mb-2">Quantité:</label>
           <input
             type="number"
             name="quantity"
@@ -159,11 +159,11 @@ const EditProduct = () => {
             className={`border-2 rounded-lg p-2 ${theme === 'dark' ? 'border-gray-600 bg-gray-700' : 'border-gray-300'}`}
             required
           />
-        </div>
+        </div> */}
 
         {/* Buying Price */}
         <div className="flex flex-col">
-          <label className="text-lg font-medium mb-2">Buying Price:</label>
+          <label className="text-lg font-medium mb-2">Prix d'achat:</label>
           <input
             type="number"
             name="buying_price"
@@ -176,7 +176,7 @@ const EditProduct = () => {
 
         {/* Selling Price */}
         <div className="flex flex-col">
-          <label className="text-lg font-medium mb-2">Selling Price:</label>
+          <label className="text-lg font-medium mb-2">Prix de vente:</label>
           <input
             type="number"
             name="selling_price"
@@ -189,7 +189,7 @@ const EditProduct = () => {
 
         {/* Quantity Alert */}
         <div className="flex flex-col">
-          <label className="text-lg font-medium mb-2">Quantity Alert:</label>
+          <label className="text-lg font-medium mb-2">Alerte de quantité:</label>
           <input
             type="number"
             name="quantity_alert"
@@ -202,14 +202,14 @@ const EditProduct = () => {
 
         {/* Category ID */}
         <div className="flex flex-col">
-          <label className="text-lg font-medium mb-2">Category:</label>
+          <label className="text-lg font-medium mb-2">Catégorie:</label>
           <select
             name="category_id"
             value={product.category_id}
             onChange={handleChange}
             className={`border-2 rounded-lg p-2 ${theme === 'dark' ? 'border-gray-600 bg-gray-700' : 'border-gray-300'}`}
           >
-            <option value="">Select a Category</option>
+            <option value="">Selectioner Catégorie</option>
             {category.map((cat) => (
               <option key={cat.id} value={cat.id}>
                 {cat.slug}
@@ -223,7 +223,7 @@ const EditProduct = () => {
         type="submit"
         className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-lg w-full hover:bg-blue-600 transition"
       >
-        Update Product
+        Mettre à jour le produit
       </button>
     </form>
   </div>

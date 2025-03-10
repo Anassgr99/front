@@ -14,7 +14,7 @@ const EditCategory = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.7:3000/api/categorys/${id}`);
+        const response = await axios.get(`http://localhost:3000/api/categorys/${id}`);
         setCategory(response.data);
         setName(response.data.name);
         setSlug(response.data.slug);
@@ -32,7 +32,7 @@ const EditCategory = () => {
     setIsSubmitting(true);
     try {
       const categoryData = { name, slug, icon };
-      await axios.put(`http://192.168.1.7:3000/api/categorys/${id}`, categoryData);
+      await axios.put(`http://localhost:3000/api/categorys/${id}`, categoryData);
       alert('Category updated successfully!');
       navigate('/ShowCategories'); // Redirect to categories page
     } catch (error) {
@@ -42,9 +42,19 @@ const EditCategory = () => {
     }
   };
 
+
   if (!category) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="flex gap-2">
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+        </div>
+      </div>
+    );
   }
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">

@@ -8,13 +8,13 @@ const ShowUser = () => {
   const navigate = useNavigate(); // Hook for navigation
   const [customer, setCustomer] = useState(null); // State to store customer details
   
-  console.log(id);
-  console.log(customer);
+  //console.log(id);
+  //console.log(customer);
   // Fetch customer details from API
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.7:3000/api/users/${id}`);
+        const response = await axios.get(`http://localhost:3000/api/users/${id}`);
         setCustomer(response.data); // Set fetched customer details
       } catch (error) {
         console.error("Error fetching customer:", error);
@@ -23,9 +23,16 @@ const ShowUser = () => {
     };
     fetchCustomer();
   }, [id]);
-
   if (!customer) {
-    return <div>Loading...</div>; // Show loading indicator while fetching data
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="flex gap-2">
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+          <div className="w-5 h-5 rounded-full animate-pulse bg-blue-600"></div>
+        </div>
+      </div>
+    );
   }
 
   return (
