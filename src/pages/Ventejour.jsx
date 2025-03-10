@@ -10,7 +10,7 @@ const VenteJour = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/orders");
+        const response = await axios.get("http://5.189.179.133:3000/api/orders");
         const rows = response.data;
         console.log("API rows:", rows);
   

@@ -32,7 +32,7 @@ const EditProduct = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/products/${id}`
+          `http://5.189.179.133:3000/api/products/${id}`
         );
         setProduct(response.data); // Update state with fetched data
         //console.log(response.data);
@@ -45,7 +45,7 @@ const EditProduct = () => {
     };
     const fetchUnits = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/unit/");
+        const response = await axios.get("http://5.189.179.133:3000/api/unit/");
         setUnits(response.data); // Set the units state with the fetched data
       } catch (error) {
         console.error("Error fetching units:", error);
@@ -54,7 +54,7 @@ const EditProduct = () => {
     };
     const fetchCategory = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/categorys/");
+        const response = await axios.get("http://5.189.179.133:3000/api/categorys/");
         setCategory(response.data); // Set the units state with the fetched data
       } catch (error) {
         console.error("Error fetching units:", error);
@@ -89,7 +89,7 @@ const EditProduct = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/products/${id}`,
+        `http://5.189.179.133:3000/api/products/${id}`,
         productToUpdate
       );
       //console.log("Product updated successfully:", response);

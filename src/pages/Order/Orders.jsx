@@ -13,7 +13,7 @@
 //   useEffect(() => {
 //     const fetchProducts = async () => {
 //       try {
-//         const response = await axios.get("http://localhost:3000/api/Orders");
+//         const response = await axios.get("http://5.189.179.133:3000/api/Orders");
 //         setProducts(response.data);
 //       } catch (error) {
 //         console.error("Error fetching products:", error);
@@ -24,7 +24,7 @@
 
 //   const deleteProduct = async (id) => {
 //     try {
-//       await axios.delete(`http://localhost:3000/api/Orders/${id}`);
+//       await axios.delete(`http://5.189.179.133:3000/api/Orders/${id}`);
 //       setProducts(products.filter((product) => product.id !== id));
 //       alert("Product deleted successfully!");
 //     } catch (error) {
@@ -241,7 +241,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/Orders");
+        const response = await axios.get("http://5.189.179.133:3000/api/Orders");
         // Format dates in the response data
         const formattedData = response.data.map((order) => ({
           ...order,
@@ -257,7 +257,7 @@ const Orders = () => {
 
   const deleteProduct = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/Orders/${id}`);
+      await axios.delete(`http://5.189.179.133:3000/api/Orders/${id}`);
       setProducts(products.filter((product) => product.id !== id));
       alert("Product deleted successfully!");
     } catch (error) {

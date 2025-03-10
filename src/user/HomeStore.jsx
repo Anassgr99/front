@@ -19,7 +19,7 @@ const HomeStore = () => {
   useEffect(() => {
     const fetchStores = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/stores");
+        const response = await fetch("http://5.189.179.133:3000/api/stores");
         if (!response.ok) throw new Error("Failed to fetch stores.");
         const data = await response.json();
         setStores(data);

@@ -20,10 +20,10 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const urls = [
-          "http://localhost:3000/api/products",
-          "http://localhost:3000/api/orders",
-          "http://localhost:3000/api/customers",
-          "http://localhost:3000/api/users",
+          "http://5.189.179.133:3000/api/products",
+          "http://5.189.179.133:3000/api/orders",
+          "http://5.189.179.133:3000/api/customers",
+          "http://5.189.179.133:3000/api/users",
         ];
         const [products, orders, customers, users] = await Promise.all(
           urls.map((url) => fetch(url).then((res) => res.json()))
