@@ -4,6 +4,8 @@ import { FiShoppingCart, FiPackage, FiUsers, FiUser } from "react-icons/fi";
 import StoreChart from "../pages/StoreChart";
 import { ThemeContext } from "../context/ThemeContext";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import StockProduct from "./StockProduct";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const { theme } = useContext(ThemeContext);
@@ -128,13 +130,23 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-12 gap-6 mt-6">
         <div
-          className={`col-span-8 shadow-lg rounded-lg p-4 transition-all ${
+          className={`col-span-6 row-span-3 shadow-md rounded-lg p-4 transition-all ${
             theme === "dark"
               ? "bg-gray-800 text-white"
               : "bg-white text-gray-800"
           }`}
         >
-          <h3 className="text-lg font-semibold mb-2">Stock de Produits</h3>
+          <h3 className="text-lg font-semibold"> 📦 Stock Products</h3>
+          <StockProduct />
+        </div>
+        <div
+          className={`col-span-6 shadow-lg rounded-lg p-4 transition-all ${
+            theme === "dark"
+              ? "bg-gray-800 text-white"
+              : "bg-white text-gray-800"
+          }`}
+        >
+          <h3 className="text-lg font-semibold mb-2">Les Produits</h3>
           <div className="mt-2  flex border-b-2 p-3 gap-2 mb-2 ">
             <button
               className={`px-6 border cursor-pointer rounded ${
@@ -169,7 +181,8 @@ const Dashboard = () => {
           </div>
           <div className="grid grid-cols-1 overflow-auto h-[300px] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {filteredProducts.map((product, index) => (
-              <div
+              <Link
+                to={`http://5.189.179.133:5173/showProduct/${product.id}`}
                 key={index}
                 className={`shadow-md rounded-lg p-2 items-center gap-3 transition-all ${
                   theme === "dark"
@@ -200,13 +213,13 @@ const Dashboard = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
 
         <div
-          className={`col-span-4 shadow-md rounded-lg p-4 transition-all ${
+          className={`col-span-6 shadow-md rounded-lg p-4 transition-all ${
             theme === "dark"
               ? "bg-gray-800 text-white"
               : "bg-white text-gray-800"
@@ -255,6 +268,8 @@ const Dashboard = () => {
           <StoreChart />
         </div>
       </div>
+
+      <div className="grid grid-cols-2 gap-6 mt-6"></div>
     </div>
   );
 };

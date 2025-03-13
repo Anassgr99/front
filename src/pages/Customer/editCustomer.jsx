@@ -147,7 +147,6 @@ const EditCustomer = () => {
     <FiSave size={20} /> Enregistrer la modification
   </button>
 </form>
-
   </div>
   );
 };
