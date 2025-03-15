@@ -66,7 +66,7 @@ const StockProduct = () => {
   });
 
   return (
-    <div className="overflow-y-auto">
+    <div className="overflow-auto ">
       {/* Filters */}
       <div className="flex  items-start justify-start gap-4 mb-6">
         {/* Filter by Store */}
@@ -120,70 +120,72 @@ const StockProduct = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-300 rounded-lg shadow-lg">
-          <thead>
-            <tr
-              className={`${
-                theme === "dark"
-                  ? "bg-gray-800 text-white"
-                  : "bg-gray-200 text-black"
-              }`}
-            >
-              <th className="px-6 py-3 border">📌 Product</th>
-              {selectedStore === "all" ? (
-                storeNames.map((store, index) => (
-                  <th key={index} className="px-6 py-3 border">
-                    {store}
-                  </th>
-                ))
-              ) : (
-                <th className="px-6 py-3 border">{selectedStore}</th>
-              )}
-              <th className="px-6 py-3 border">📊 Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(selectedStore === "all" ? formattedData : sortedData).map(
-              (item, index) => (
-                <tr
-                  key={index}
-                  className={`text-center border ${
-                    theme === "dark"
-                      ? "bg-gray-800 hover:bg-gray-700"
-                      : "bg-white hover:bg-gray-200"
-                  } transition shadow-md`}
+      {/* Table */}
+<div className="overflow-x-auto max-h-[70vh] overflow-y-auto">
+  <table className="min-w-full border border-gray-300 rounded-lg shadow-lg">
+    <thead>
+      <tr
+        className={`${
+          theme === "dark"
+            ? "bg-gray-800 text-white"
+            : "bg-gray-200 text-black"
+        }`}
+      >
+        <th className="px-6 py-3 border">📌 Product</th>
+        {selectedStore === "all" ? (
+          storeNames.map((store, index) => (
+            <th key={index} className="px-6 py-3 border">
+              {store}
+            </th>
+          ))
+        ) : (
+          <th className="px-6 py-3 border">{selectedStore}</th>
+        )}
+        <th className="px-6 py-3 border">📊 Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {(selectedStore === "all" ? formattedData : sortedData).map(
+        (item, index) => (
+          <tr
+            key={index}
+            className={`text-center border ${
+              theme === "dark"
+                ? "bg-gray-800 hover:bg-gray-700"
+                : "bg-white hover:bg-gray-200"
+            } transition shadow-md`}
+          >
+            <td className="px-6 py-3 border font-semibold">
+              {item.product_name}
+            </td>
+            {selectedStore === "all" ? (
+              storeNames.map((store, idx) => (
+                <td
+                  key={idx}
+                  className={`px-6 py-3 border ${getBgClass(
+                    item.stores[store] || 0
+                  )}`}
                 >
-                  <td className="px-6 py-3 border font-semibold">
-                    {item.product_name}
-                  </td>
-                  {selectedStore === "all" ? (
-                    storeNames.map((store, idx) => (
-                      <td
-                        key={idx}
-                        className={`px-6 py-3 border ${getBgClass(
-                          item.stores[store] || 0
-                        )}`}
-                      >
-                        {item.stores[store] || 0}
-                      </td>
-                    ))
-                  ) : (
-                    <td
-                      className={`px-6 py-3 border ${getBgClass(
-                        item.stores[selectedStore] || 0
-                      )}`}
-                    >
-                      {item.stores[selectedStore] || 0}
-                    </td>
-                  )}
-                  <td className="px-6 py-3 border font-bold">{item.total}</td>
-                </tr>
-              )
+                  {item.stores[store] || 0}
+                </td>
+              ))
+            ) : (
+              <td
+                className={`px-6 py-3 border ${getBgClass(
+                  item.stores[selectedStore] || 0
+                )}`}
+              >
+                {item.stores[selectedStore] || 0}
+              </td>
             )}
-          </tbody>
-        </table>
-      </div>
+            <td className="px-6 py-3 border font-bold">{item.total}</td>
+          </tr>
+        )
+      )}
+    </tbody>
+  </table>
+</div>
+
     </div>
   );
 };

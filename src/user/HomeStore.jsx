@@ -19,8 +19,17 @@ const HomeStore = () => {
   useEffect(() => {
     const fetchStores = async () => {
       try {
-        const response = await fetch("http://5.189.179.133:3000/api/stores");
+        const token = localStorage.getItem("token"); // ✅ جلب التوكن
+  
+        const response = await fetch("http://5.189.179.133:3000/api/stores", {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`, // ✅ إضافة التوكن فـ الهيدر
+          },
+        });
+  
         if (!response.ok) throw new Error("Failed to fetch stores.");
+        
         const data = await response.json();
         setStores(data);
       } catch (error) {
@@ -29,10 +38,10 @@ const HomeStore = () => {
         setLoading(false);
       }
     };
-
+  
     fetchStores();
   }, []);
-
+  
   // Search Filtering
   const filteredStores = useMemo(() => {
     return stores.filter((store) =>

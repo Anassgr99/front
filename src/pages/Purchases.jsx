@@ -51,7 +51,7 @@ const Purchases = () => {
   
 
   return (
-    <>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
       <div className="">
         <div
           className={`col-span-12  ${
@@ -124,7 +124,7 @@ const Purchases = () => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

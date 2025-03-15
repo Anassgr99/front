@@ -15,7 +15,7 @@ const ShowOrder = () => {
   const { theme } = useContext(ThemeContext);
   const { id } = useParams();
   const [order, setOrder] = useState(null);
-  console.log(order);
+ //console.log(order);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -58,6 +58,7 @@ const ShowOrder = () => {
   };
 
   return (
+    <div className={`min-h-screen flex justify-center ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
     <div
       className={`container mx-auto p-8 ${
         theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"
@@ -163,6 +164,7 @@ const ShowOrder = () => {
           Annuler
         </Link>
       </div>
+    </div>
     </div>
   );
 };

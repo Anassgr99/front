@@ -778,10 +778,17 @@ const HomeDashboard = () => {
     navigate("/login");
   };
   // Fetch categories
+  const token = localStorage.getItem("token"); // ✅ جلب التوكن
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch("http://5.189.179.133:3000/api/categorys/");
+        const response = await fetch("http://5.189.179.133:3000/api/categorys/",{
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`, // ✅ إضافة التوكن فـ الهيدر
+          },
+        });
 
         if (!response.ok) throw new Error("Error fetching categories");
         const data = await response.json();
@@ -799,8 +806,13 @@ const HomeDashboard = () => {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://5.189.179.133:3000/api/getStockQuantitiesByid/${id}`
-        );
+          `http://5.189.179.133:3000/api/getStockQuantitiesByid/${id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`, // ✅ إضافة التوكن فـ الهيدر
+            },
+          });
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -887,8 +899,13 @@ const HomeDashboard = () => {
       };
       const response = await axios.post(
         "http://5.189.179.133:3000/api/orders",
-        orderData
-      );
+        orderData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`, // ✅ إضافة التوكن فـ الهيدر
+          },
+        });
       if (response.data && response.data.orderId) {
         toast.success(
           `Order placed successfully! Order ID: INV-${Date.now()}`

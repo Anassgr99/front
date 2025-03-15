@@ -17,16 +17,16 @@ const Login = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // إذا كان هناك توكن
         },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
-      ////console.log(data);
+      // console.log(data);
 
       if (response.ok) {
         // Assuming data returns { token, user: { isAdmin } }
+        console.log("Token received:", data.token);
         localStorage.setItem("token", data.token);
         localStorage.setItem("isAdmin", data.user.isAdmin);
         localStorage.setItem("store", data.user.store);

@@ -17,11 +17,16 @@ const StoreChart = () => {
   const [topProducts, setTopProducts] = useState([]);
 
   //console.log(topProducts);
-
+  const token = localStorage.getItem("token"); 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://5.189.179.133:3000/api/orders");
+        const response = await fetch("http://5.189.179.133:3000/api/orders",{
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`, // ✅ إضافة التوكن فـ الهيدر
+          },
+        });
         const data = await response.json();
 
         if (Array.isArray(data)) {

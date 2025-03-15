@@ -232,7 +232,7 @@ const AddCategory = () => {
 
       // Post the category data to your API
       const response = await axios.post("http://5.189.179.133:3000/api/categorys", categoryPayload);
-      console.log("Category added successfully:", response.data);
+     //console.log("Category added successfully:", response.data);
 
       // Reset form fields and close modal
       setIsModalOpen(false);

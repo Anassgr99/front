@@ -12,8 +12,8 @@ const Category = () => {
 
   // Dynamically load all icons from the `../assets/brands` folder
   const icons = import.meta.glob('../assets/brands/*.png', { eager: true });
-  console.log("user", localStorage.getItem("customerId"));
-  console.log("Available icons:", Object.keys(icons));
+ //console.log("user", localStorage.getItem("customerId"));
+ //console.log("Available icons:", Object.keys(icons));
   useEffect(() => {
     // Fetch categories from backend
     fetch('http://5.189.179.133:3000/api/categorys')

@@ -102,7 +102,8 @@ const EditProduct = () => {
   };
 
   return (
-    <div className={`container mx-auto p-8 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+    <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
+      <div className={`shadow-lg rounded-lg p-8 w-full max-w-lg ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
     <h1 className="text-2xl font-bold mb-6">Modifier le produit</h1>
 
     <form
@@ -227,7 +228,10 @@ const EditProduct = () => {
       </button>
     </form>
   </div>
+  </div>
   );
 };
 
 export default EditProduct;
+
+

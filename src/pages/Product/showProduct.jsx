@@ -37,6 +37,7 @@ const ShowProduct = () => {
   }
 
   return (
+  <div className={`min-h-screen  justify-center ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}>
     <div
       className={`container mx-auto p-8 ${
         theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-black"
@@ -223,6 +224,7 @@ const ShowProduct = () => {
         </div>
       </div>
     </div>
+  </div>
   );
 };
 

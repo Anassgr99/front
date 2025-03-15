@@ -21,20 +21,32 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = localStorage.getItem("token");
+  
         const urls = [
           "http://5.189.179.133:3000/api/products",
           "http://5.189.179.133:3000/api/orders",
           "http://5.189.179.133:3000/api/customers",
           "http://5.189.179.133:3000/api/users",
         ];
-        const [products, orders, customers, users] = await Promise.all(
-          urls.map((url) => fetch(url).then((res) => res.json()))
-        );
+  
+        const fetchWithAuth = (url) => 
+          fetch(url, {
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}` 
+            }
+          }).then((res) => res.json());
+  
+        const [products, orders, customers, users] = await Promise.all(urls.map(fetchWithAuth));
+  
         setData({ products, orders, customers, users });
+  
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
+  
     fetchData();
   }, []);
 
@@ -128,9 +140,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-6 mt-6">
+      <div className="grid grid-cols-12 gap-6 mt-6 ">
         <div
-          className={`col-span-6 row-span-3 shadow-md rounded-lg p-4 transition-all ${
+          className={`col-span-6 row-span-2  shadow-md rounded-lg p-4 transition-all ${
             theme === "dark"
               ? "bg-gray-800 text-white"
               : "bg-white text-gray-800"

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { MaterialReactTable } from "material-react-table";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { FiEye, FiEdit, FiTrash2, FiAlertTriangle } from "react-icons/fi";
+import { FiEye, FiEdit, FiTrash2, FiAlertTriangle, FiEdit2 } from "react-icons/fi";
 import AddProduct from "../Product/AddProduct";
 import UploadExcel from "../Product/Excel/Excel";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -50,47 +50,6 @@ const Products = () => {
       accessorKey: "code",
       header: "Code de produit",
     },
-    // {
-    //   accessorKey: "quantity",
-    //   header: "Quantité",
-    //   Cell: ({ row }) => {
-    //     const quantity = row.original.quantity; // Current quantity
-    //     const quantityAlert = row.original.quantity_alert; // Alert threshold
-
-    //     // Determine the alert status
-    //     let alertStatus = "";
-    //     let alertColor = "";
-    //     let icon = null;
-
-    //     if (quantity > quantityAlert) {
-    //       alertStatus = "Good ";
-    //       alertColor = "bg-green-500";
-    //       icon = <span className=" text-green-500"> </span>; // Green checkmark icon
-    //     } else if (quantity >= quantityAlert / 2 && quantity <= quantityAlert) {
-    //       alertStatus = "Low ";
-    //       alertColor = "bg-yellow-500 ";
-    //       icon = (
-    //         <span className="fi fi-alert-circle text-blue-500">
-    //           {" "}
-    //           <FiAlertTriangle />
-    //         </span>
-    //       ); // Yellow warning icon
-    //     } else if (quantity < quantityAlert / 2) {
-    //       alertStatus = "Warning ";
-    //       alertColor = "bg-red-500";
-    //       icon = <i className="fi fi-x-circle text-red-500"></i>; // Red error icon
-    //     }
-
-    //     return (
-    //       <div
-    //         className={`flex items-center justify-center rounded-2xl h-7 w-7 ${alertColor} font-semibold`}
-    //       >
-    //         <span>{quantity}</span>
-    //         {/* {icon} */}
-    //       </div>
-    //     );
-    //   },
-    // },
     {
       accessorKey: "buying_price",
       header: "Prix d'achat",
@@ -112,10 +71,10 @@ const Products = () => {
             Afficher
           </button>
           <button
-            onClick={() => navigate(`/editProduct/${row.original.id}`)}
-            className="px-4 py-2 text-white bg-yellow-500 hover:bg-yellow-600 rounded-lg flex items-center gap-2"
+              onClick={() => navigate(`/editProduct/${row.original.id}`)}
+            className="px-4 py-2 text-white bg-green-500 hover:bg-green-600 rounded-lg flex items-center gap-2"
           >
-            <FiEdit /> {/* Edit icon for "Edit" */}
+            <FiEdit2 /> {/* Trash icon for "Delete" */}
             Modifier
           </button>
           <button
@@ -179,7 +138,7 @@ const Products = () => {
               ...(theme === "dark" ? darkModeStyles : lightModeStyles),
               boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
               // borderRadius: "12px",
-              overflow: "hidden",
+              overflow: "auto",
             },
           }}
           muiTableBodyCellProps={{

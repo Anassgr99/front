@@ -8,6 +8,7 @@ import HomeStore from "./user/HomeStore";
 import { ThemeProvider } from "./context/ThemeContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 // Lazy loading for better performance
 const Dashboard = lazy(() => import("./components/Dashboard"));
@@ -56,7 +57,13 @@ const adminRoutes = [
   { path: "/Showcategories", element: <Showcategories /> },
   { path: "/showOrders/:id", element: <ShowOrder /> },
 ];
-
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");  
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 const App = () => {
   return (
     <ThemeProvider>
